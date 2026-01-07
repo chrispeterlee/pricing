@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Pricing Tool with Tech Fees | Blink Parametric Internal</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #1a1f2e;
+            --accent: #0066ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --surface: #FFFFFF;
+            --surface-alt: #f8fafc;
+            --surface-dark: #f1f5f9;
+            --border: #e2e8f0;
+            --text-primary: #1a1f2e;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--surface-alt);
+            min-height: 100vh;
+        }
+
+        .top-bar {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .top-bar-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .badge {
+            background: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        .panel-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface-alt);
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .panel-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .panel-body {
+            padding: 1.5rem;
+        }
+
+        .form-section {
+            margin-bottom: 1.75rem;
+            padding-bottom: 1.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.375rem;
+            font-size: 0.875rem;
+        }
+
+        .help-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-family: inherit;
+            transition: all 0.15s ease;
+            background: var(--surface);
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .toggle-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.375rem;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+        }
+
+        .toggle-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .toggle-btn:hover:not(.active) {
+            border-color: var(--accent);
+            background: var(--surface-alt);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            margin-top: 1.5rem;
+        }
+
+        .calculate-btn:hover {
+            background: #0052cc;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .partner-info {
+            background: var(--surface-alt);
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .partner-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .partner-market {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .quote-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--text-primary);
+        }
+
+        .btn:hover {
+            background: var(--surface-alt);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .btn-primary:hover {
+            background: #0052cc;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .metric-card {
+            background: var(--surface-alt);
+            padding: 1.25rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .metric-subtext {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .pricing-tables {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 968px) {
+            .pricing-tables {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pricing-table {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: var(--surface-dark);
+            padding: 1rem 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--surface-alt);
+            padding: 0.75rem 1.25rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .delay-time {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .price-value {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+        }
+
+        .price-breakdown {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .price-total {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        tr.recommended {
+            background: linear-gradient(to right, rgba(0, 102, 255, 0.05) 0%, rgba(0, 102, 255, 0.02) 100%);
+        }
+
+        tr.recommended td {
+            position: relative;
+        }
+
+        tr.recommended td:first-child::before {
+            content: '→';
+            position: absolute;
+            left: 0.5rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: var(--danger);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .volume-band-selector {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--surface-alt);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .volume-band-selector label {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-fee-display {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #fef3c7;
+            border: 1px solid #fbbf24;
+            border-radius: var(--radius);
+        }
+
+        .tech-fee-display h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .tech-fee-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .tech-fee-item {
+            font-size: 0.75rem;
+        }
+
+        .tech-fee-label {
+            color: var(--text-muted);
+        }
+
+        .tech-fee-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .discount-input {
+            margin-top: 0.5rem;
+        }
+
+        .discount-note {
+            font-size: 0.7rem;
+            color: var(--warning);
+            margin-top: 0.25rem;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="logo">
+                <span>🔷 Blink Parametric</span>
+                <span class="badge">Internal Tool v3.0</span>
+            </div>
+            <div style="color: rgba(255,255,255,0.7); font-size: 0.875rem;">
+                Complete Partner Pricing Calculator (Underwriting + Tech Fees)
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Generate Complete Partner Quote</h1>
+            <p class="page-description">
+                Calculate full pricing including underwriting costs and Blink technology fees.
+                Shows per-policy costs that partners will pay to Blink, including our tech platform fees.
+            </p>
+        </div>
+
+        <div class="main-grid">
+            <!-- Configuration Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">Quote Configuration</div>
+                </div>
+                <div class="panel-body">
+                    <!-- Partner Information -->
+                    <div class="form-section">
+                        <div class="section-title">Partner Information</div>
+                        
+                        <div class="form-group">
+                            <label>Partner Name</label>
+                            <input type="text" id="partnerName" placeholder="e.g., Zurich Insurance">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Primary Market</label>
+                            <select id="primaryMarket">
+                                <option value="">Select partner's market...</option>
+                            </select>
+                            <span class="help-text">The country where the partner operates</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Expected Annual Policy Volume</label>
+                            <select id="volumeBand">
+                                <option value="0">0 - 250,000 policies</option>
+                                <option value="1">250,001 - 500,000 policies</option>
+                                <option value="2">500,001 - 1,000,000 policies</option>
+                                <option value="3">1,000,001 - 2,000,000 policies</option>
+                                <option value="4">2,000,001 - 3,000,000 policies</option>
+                                <option value="5">3,000,001 - 4,000,000 policies</option>
+                                <option value="6">4,000,001 - 5,000,000 policies</option>
+                                <option value="7">5,000,001+ policies</option>
+                            </select>
+                            <span class="help-text">Determines technology fee rates</span>
+                        </div>
+                    </div>
+
+                    <!-- Coverage Structure -->
+                    <div class="form-section">
+                        <div class="section-title">Coverage Structure</div>
+                        
+                        <div class="form-group">
+                            <label>Benefit Type</label>
+                            <div class="toggle-group">
+                                <button class="toggle-btn active" data-type="lounge">VIP Lounge</button>
+                                <button class="toggle-btn" data-type="cash">Cash Payout</button>
+                            </div>
+                        </div>
+
+                        <div id="benefitDetails">
+                            <div class="input-group">
+                                <div class="form-group">
+                                    <label id="benefitLabel">Lounge Pass Cost ($)</label>
+                                    <input type="number" id="benefitValue" value="26.76" step="0.01">
+                                </div>
+                                <div class="form-group">
+                                    <label>Transaction Fee ($)</label>
+                                    <input type="number" id="transactionFee" value="2.50" step="0.01">
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="redemptionGroup">
+                                <label>Expected Redemption Rate (%)</label>
+                                <input type="number" id="redemptionRate" value="100" min="0" max="100">
+                                <span class="help-text">% of eligible customers who will claim</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delayed Baggage Coverage -->
+                    <div class="form-section">
+                        <div class="section-title">Delayed Baggage Coverage</div>
+                        
+                        <div class="form-group">
+                            <label>Include Baggage Coverage</label>
+                            <div class="toggle-group">
+                                <button class="toggle-btn luggage active" data-luggage="yes">Yes</button>
+                                <button class="toggle-btn luggage" data-luggage="no">No</button>
+                            </div>
+                        </div>
+
+                        <div id="baggageDetails">
+                            <div class="input-group">
+                                <div class="form-group">
+                                    <label>Initial Delay Payout ($)</label>
+                                    <input type="number" id="baggageInitial" value="10" step="1">
+                                    <span class="help-text">Paid immediately</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>48+ Hour Payout ($)</label>
+                                    <input type="number" id="baggage48hr" value="50" step="1">
+                                    <span class="help-text">Additional if >48hrs</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Operational Parameters -->
+                    <div class="form-section">
+                        <div class="section-title">Operational Parameters</div>
+                        
+                        <div class="input-group">
+                            <div class="form-group">
+                                <label>Registration Rate (%)</label>
+                                <select id="registrationRate">
+                                    <option value="10">10% - Credit Card Group</option>
+                                    <option value="30" selected>30% - Standard Product</option>
+                                    <option value="100">100% - Airline Direct</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                                <input type="number" id="customRegistration" style="display:none; margin-top:0.5rem;" placeholder="Enter custom %" min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label>Underwriting Margin (%)</label>
+                                <input type="number" id="underwritingMargin" value="20" min="0" max="100">
+                                <span class="help-text">Margin on expected loss</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="form-group">
+                                <label>Single Trip Flights</label>
+                                <input type="number" id="singleTripFlights" value="2.2" step="0.1">
+                                <span class="help-text">Avg flights/policy</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Multi-Trip Flights</label>
+                                <input type="number" id="multiTripFlights" value="4.84" step="0.1">
+                                <span class="help-text">Annual avg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technology Fee Parameters -->
+                    <div class="form-section">
+                        <div class="section-title">Technology Fee Components</div>
+                        
+                        <div class="input-group">
+                            <div class="form-group">
+                                <label>SMS Cost (€)</label>
+                                <input type="number" id="smsCost" value="0.07" step="0.01" min="0">
+                                <span class="help-text">Per SMS message</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Flight Tracking (€)</label>
+                                <input type="number" id="flightTrackingCost" value="0.10" step="0.01" min="0">
+                                <span class="help-text">Per flight segment</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="form-group">
+                                <label>Email Cost (€)</label>
+                                <input type="number" id="emailCost" value="0.03" step="0.01" min="0">
+                                <span class="help-text">Per email</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Platform Cost (€)</label>
+                                <input type="number" id="platformCost" value="0.01" step="0.01" min="0">
+                                <span class="help-text">Per policy</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="form-group">
+                                <label>Tech Margin (%)</label>
+                                <input type="number" id="techMargin" value="80" min="0" max="95">
+                                <span class="help-text">Gross profit on tech</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Tech Discount (%)</label>
+                                <input type="number" id="techDiscount" value="0" min="0" max="50">
+                                <div class="discount-note" id="discountNote" style="display:none;">
+                                    Approval: <span id="approvalRequired"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 0.75rem; padding: 0.75rem; background: var(--surface-alt); border-radius: var(--radius); font-size: 0.75rem; color: var(--text-muted);">
+                            <strong>Note:</strong> SMS and emails are sent per flight (1 notification per flight segment)
+                        </div>
+                    </div>
+
+                    <button class="calculate-btn" onclick="calculatePricing()">
+                        Generate Complete Pricing Quote
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">Complete Quote Results</div>
+                </div>
+                <div class="panel-body">
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p>Calculating complete pricing...</p>
+                    </div>
+
+                    <div id="resultsContent" style="display: none;">
+                        <!-- Partner Summary -->
+                        <div class="results-header">
+                            <div class="partner-info">
+                                <div class="partner-name" id="partnerDisplay">-</div>
+                                <div class="partner-market" id="marketDisplay">-</div>
+                            </div>
+                            <div class="quote-actions">
+                                <button class="btn" onclick="window.print()">Export PDF</button>
+                                <button class="btn btn-primary" onclick="copyToClipboard()">Copy Quote</button>
+                            </div>
+                        </div>
+
+                        <!-- Key Metrics -->
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-label">Volume Band</div>
+                                <div class="metric-value" id="volumeDisplay">-</div>
+                                <div class="metric-subtext">Tech fee tier</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Tech Fee Rate</div>
+                                <div class="metric-value" id="techFeeRate">-</div>
+                                <div class="metric-subtext">Per policy (ST/AMT)</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Setup Fee</div>
+                                <div class="metric-value">€10,000</div>
+                                <div class="metric-subtext">One-time</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Monthly Min</div>
+                                <div class="metric-value">€5,000</div>
+                                <div class="metric-subtext">Platform fee</div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Tables -->
+                        <div class="pricing-tables">
+                            <!-- Single Trip Pricing -->
+                            <div class="pricing-table">
+                                <div class="table-header">
+                                    <span>Single Trip Policy</span>
+                                    <span class="table-badge" id="singleTripFlightCount">-</span>
+                                </div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Delay Trigger</th>
+                                            <th>Total Cost to Partner</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="singleTripTable">
+                                        <!-- Rows will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Multi Trip Pricing -->
+                            <div class="pricing-table">
+                                <div class="table-header">
+                                    <span>Annual Multi-Trip Policy</span>
+                                    <span class="table-badge" id="multiTripFlightCount">-</span>
+                                </div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Delay Trigger</th>
+                                            <th>Total Cost to Partner</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="multiTripTable">
+                                        <!-- Rows will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Tech Fee Summary -->
+                        <div class="tech-fee-display">
+                            <h3>Blink Technology Fee Breakdown</h3>
+                            <div class="tech-fee-grid">
+                                <div class="tech-fee-item">
+                                    <div class="tech-fee-label">Volume Band:</div>
+                                    <div class="tech-fee-value" id="techVolumeBand">-</div>
+                                </div>
+                                <div class="tech-fee-item">
+                                    <div class="tech-fee-label">ST Tech Fee:</div>
+                                    <div class="tech-fee-value" id="stTechFee">-</div>
+                                </div>
+                                <div class="tech-fee-item">
+                                    <div class="tech-fee-label">AMT Tech Fee:</div>
+                                    <div class="tech-fee-value" id="amtTechFee">-</div>
+                                </div>
+                                <div class="tech-fee-item">
+                                    <div class="tech-fee-label">Discount Applied:</div>
+                                    <div class="tech-fee-value" id="discountApplied">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 2rem; padding: 1rem; background: var(--surface-alt); border-radius: var(--radius); border: 1px solid var(--border);">
+                            <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0;">
+                                <strong>Note:</strong> Total costs include underwriting expected loss, margin, and Blink technology fees. 
+                                Partners typically add 20-50% markup for end customers. Technology fees cover flight monitoring, 
+                                SMS/email notifications, and platform access.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="emptyState" class="empty-state">
+                        <div class="empty-state-icon">💰</div>
+                        <p>Configure quote parameters and click "Generate Complete Pricing Quote" to see results</p>
+                    </div>
+
+                    <div id="errorMessage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Volume band discounts on tech fees
+        const volumeDiscounts = {
+            0: { discount: 0, band: "0-250K" },
+            1: { discount: 0.10, band: "250K-500K" },
+            2: { discount: 0.20, band: "500K-1M" },
+            3: { discount: 0.30, band: "1M-2M" },
+            4: { discount: 0.40, band: "2M-3M" },
+            5: { discount: 0.45, band: "3M-4M" },
+            6: { discount: 0.50, band: "4M-5M" },
+            7: { discount: 0.55, band: "5M+" }
+        };
+
+        // Sample market delay data
+        const sampleMarketData = {
+            "United States": {"0.5h": 0.0571, "1h": 0.0394, "1.5h": 0.0293, "2h": 0.0229, "2.5h": 0.0185, "3h": 0.0152, "3.5h": 0.0127, "4h": 0.0107, "4.5h": 0.0091, "5h": 0.0078},
+            "United Kingdom": {"0.5h": 0.0812, "1h": 0.0543, "1.5h": 0.0398, "2h": 0.0308, "2.5h": 0.0246, "3h": 0.0201, "3.5h": 0.0167, "4h": 0.0141, "4.5h": 0.0120, "5h": 0.0103},
+            "Germany": {"0.5h": 0.0698, "1h": 0.0456, "1.5h": 0.0331, "2h": 0.0254, "2.5h": 0.0201, "3h": 0.0163, "3.5h": 0.0134, "4h": 0.0112, "4.5h": 0.0095, "5h": 0.0081},
+            "France": {"0.5h": 0.0754, "1h": 0.0501, "1.5h": 0.0367, "2h": 0.0284, "2.5h": 0.0227, "3h": 0.0185, "3.5h": 0.0154, "4h": 0.0129, "4.5h": 0.0110, "5h": 0.0094},
+            "Spain": {"0.5h": 0.0823, "1h": 0.0554, "1.5h": 0.0409, "2h": 0.0319, "2.5h": 0.0257, "3h": 0.0211, "3.5h": 0.0176, "4h": 0.0149, "4.5h": 0.0127, "5h": 0.0109},
+            "Italy": {"0.5h": 0.0867, "1h": 0.0589, "1.5h": 0.0438, "2h": 0.0343, "2.5h": 0.0277, "3h": 0.0228, "3.5h": 0.0191, "4h": 0.0162, "4.5h": 0.0138, "5h": 0.0119},
+            "Netherlands": {"0.5h": 0.0634, "1h": 0.0412, "1.5h": 0.0298, "2h": 0.0228, "2.5h": 0.0180, "3h": 0.0145, "3.5h": 0.0119, "4h": 0.0099, "4.5h": 0.0084, "5h": 0.0071},
+            "Canada": {"0.5h": 0.0612, "1h": 0.0423, "1.5h": 0.0314, "2h": 0.0245, "2.5h": 0.0197, "3h": 0.0162, "3.5h": 0.0135, "4h": 0.0114, "4.5h": 0.0097, "5h": 0.0084},
+            "Australia": {"0.5h": 0.0445, "1h": 0.0298, "1.5h": 0.0217, "2h": 0.0167, "2.5h": 0.0133, "3h": 0.0108, "3.5h": 0.0089, "4h": 0.0074, "4.5h": 0.0063, "5h": 0.0053},
+            "Japan": {"0.5h": 0.0312, "1h": 0.0198, "1.5h": 0.0139, "2h": 0.0104, "2.5h": 0.0081, "3h": 0.0064, "3.5h": 0.0052, "4h": 0.0043, "4.5h": 0.0035, "5h": 0.0029},
+            "Singapore": {"0.5h": 0.0389, "1h": 0.0256, "1.5h": 0.0184, "2h": 0.0140, "2.5h": 0.0110, "3h": 0.0088, "3.5h": 0.0072, "4h": 0.0060, "4.5h": 0.0050, "5h": 0.0042},
+            "UAE": {"0.5h": 0.0523, "1h": 0.0356, "1.5h": 0.0262, "2h": 0.0203, "2.5h": 0.0162, "3h": 0.0132, "3.5h": 0.0109, "4h": 0.0092, "4.5h": 0.0078, "5h": 0.0066},
+            "Brazil": {"0.5h": 0.0934, "1h": 0.0645, "1.5h": 0.0483, "2h": 0.0380, "2.5h": 0.0308, "3h": 0.0255, "3.5h": 0.0214, "4h": 0.0182, "4.5h": 0.0156, "5h": 0.0135},
+            "Mexico": {"0.5h": 0.0812, "1h": 0.0556, "1.5h": 0.0413, "2h": 0.0323, "2.5h": 0.0260, "3h": 0.0214, "3.5h": 0.0179, "4h": 0.0151, "4.5h": 0.0129, "5h": 0.0111},
+            "India": {"0.5h": 0.1123, "1h": 0.0789, "1.5h": 0.0598, "2h": 0.0475, "2.5h": 0.0388, "3h": 0.0323, "3.5h": 0.0273, "4h": 0.0234, "4.5h": 0.0202, "5h": 0.0176},
+            "China": {"0.5h": 0.1234, "1h": 0.0876, "1.5h": 0.0668, "2h": 0.0533, "2.5h": 0.0437, "3h": 0.0365, "3.5h": 0.0309, "4h": 0.0265, "4.5h": 0.0229, "5h": 0.0200},
+            "Indonesia": {"0.5h": 0.1456, "1h": 0.1045, "1.5h": 0.0807, "2h": 0.0649, "2.5h": 0.0536, "3h": 0.0450, "3.5h": 0.0382, "4h": 0.0329, "4.5h": 0.0285, "5h": 0.0249},
+            "South Africa": {"0.5h": 0.0789, "1h": 0.0534, "1.5h": 0.0394, "2h": 0.0306, "2.5h": 0.0245, "3h": 0.0200, "3.5h": 0.0166, "4h": 0.0140, "4.5h": 0.0119, "5h": 0.0102},
+            "Ireland": {"0.5h": 0.0812, "1h": 0.0543, "1.5h": 0.0398, "2h": 0.0308, "2.5h": 0.0246, "3h": 0.0201, "3.5h": 0.0167, "4h": 0.0141, "4.5h": 0.0120, "5h": 0.0103}
+        };
+
+        // Handle registration rate change
+        document.getElementById('registrationRate').addEventListener('change', function() {
+            const customInput = document.getElementById('customRegistration');
+            if (this.value === 'custom') {
+                customInput.style.display = 'block';
+            } else {
+                customInput.style.display = 'none';
+            }
+        });
+
+        // Handle tech discount change
+        document.getElementById('techDiscount').addEventListener('input', function() {
+            const discount = parseFloat(this.value) || 0;
+            const discountNote = document.getElementById('discountNote');
+            const approvalRequired = document.getElementById('approvalRequired');
+            
+            if (discount > 0 && discount <= 15) {
+                discountNote.style.display = 'block';
+                approvalRequired.textContent = 'Sid Mouncey';
+                approvalRequired.style.color = 'var(--warning)';
+            } else if (discount > 15) {
+                discountNote.style.display = 'block';
+                approvalRequired.textContent = 'Brian Barter';
+                approvalRequired.style.color = 'var(--danger)';
+            } else {
+                discountNote.style.display = 'none';
+            }
+        });
+
+        // Main calculation function
+        function calculatePricing() {
+            const partnerName = document.getElementById('partnerName').value || 'Partner';
+            const market = document.getElementById('primaryMarket').value;
+            const volumeBand = parseInt(document.getElementById('volumeBand').value);
+            
+            if (!market) {
+                showError('Please select the partner\'s primary market');
+                return;
+            }
+            
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('resultsContent').style.display = 'none';
+            document.getElementById('errorMessage').innerHTML = '';
+            
+            setTimeout(() => {
+                performCalculation(partnerName, market, volumeBand);
+            }, 600);
+        }
+
+        function performCalculation(partnerName, market, volumeBand) {
+            try {
+                // Get registration rate
+                const regSelect = document.getElementById('registrationRate');
+                let registrationRate;
+                if (regSelect.value === 'custom') {
+                    registrationRate = parseFloat(document.getElementById('customRegistration').value) / 100;
+                } else {
+                    registrationRate = parseFloat(regSelect.value) / 100;
+                }
+
+                const benefitType = document.querySelector('.toggle-btn[data-type].active').dataset.type;
+                const benefitValue = parseFloat(document.getElementById('benefitValue').value);
+                const transactionFee = parseFloat(document.getElementById('transactionFee').value);
+                const redemptionRate = benefitType === 'lounge' ? parseFloat(document.getElementById('redemptionRate').value) / 100 : 1;
+                const singleTripFlights = parseFloat(document.getElementById('singleTripFlights').value);
+                const multiTripFlights = parseFloat(document.getElementById('multiTripFlights').value);
+                const underwritingMargin = parseFloat(document.getElementById('underwritingMargin').value) / 100;
+                const techDiscount = parseFloat(document.getElementById('techDiscount').value) / 100;
+                
+                // Get operational cost inputs
+                const smsCost = parseFloat(document.getElementById('smsCost').value);
+                const flightTrackingCost = parseFloat(document.getElementById('flightTrackingCost').value);
+                const emailCost = parseFloat(document.getElementById('emailCost').value);
+                const platformCost = parseFloat(document.getElementById('platformCost').value);
+                const techMargin = parseFloat(document.getElementById('techMargin').value) / 100;
+                
+                // SMS and Email counts are now 1 per flight
+                const stSmsCount = singleTripFlights;  // 1 SMS per flight
+                const amtSmsCount = multiTripFlights;  // 1 SMS per flight
+                const stEmailCount = singleTripFlights;  // 1 email per flight
+                const amtEmailCount = multiTripFlights;  // 1 email per flight
+                
+                // Calculate tech margin multiplier (e.g., 80% margin = 5x multiplier)
+                const techMarginMultiplier = 1 / (1 - techMargin);
+                
+                // Calculate technology fees based on operational costs
+                const stOperationalCost = (smsCost * stSmsCount) + 
+                                         (flightTrackingCost * singleTripFlights) + 
+                                         (emailCost * stEmailCount) + 
+                                         platformCost;
+                
+                const amtOperationalCost = (smsCost * amtSmsCount) + 
+                                          (flightTrackingCost * multiTripFlights) + 
+                                          (emailCost * amtEmailCount) + 
+                                          platformCost;
+                
+                // Apply margin
+                const stBaseTechFee = stOperationalCost * techMarginMultiplier;
+                const amtBaseTechFee = amtOperationalCost * techMarginMultiplier;
+                
+                // Apply volume discount
+                const volumeDiscount = volumeDiscounts[volumeBand].discount;
+                
+                // Apply registration rate adjustment and any additional discount
+                const stTechFee = stBaseTechFee * registrationRate * (1 - volumeDiscount) * (1 - techDiscount);
+                const amtTechFee = amtBaseTechFee * registrationRate * (1 - volumeDiscount) * (1 - techDiscount);
+                
+                const loungePassCost = 26.76;
+                const cashPercentage = benefitType === 'lounge' ? 0 : 1;
+                const totalDelayIndemnity = (cashPercentage * (transactionFee + benefitValue)) + 
+                                           ((1 - cashPercentage) * loungePassCost);
+                
+                const includeBaggage = document.querySelector('.luggage.active').dataset.luggage === 'yes';
+                let baggageCostSingle = 0;
+                let baggageCostMulti = 0;
+                
+                if (includeBaggage) {
+                    const baggageInitial = parseFloat(document.getElementById('baggageInitial').value);
+                    const baggage48hr = parseFloat(document.getElementById('baggage48hr').value);
+                    const baggageFreq = 0.0063;
+                    const baggage48Freq = 0.002142;
+                    
+                    baggageCostSingle = ((baggageInitial + transactionFee) * registrationRate * singleTripFlights * baggageFreq) +
+                                       ((baggage48hr + transactionFee) * registrationRate * singleTripFlights * baggage48Freq);
+                    
+                    baggageCostMulti = ((baggageInitial + transactionFee) * registrationRate * multiTripFlights * baggageFreq) +
+                                      ((baggage48hr + transactionFee) * registrationRate * multiTripFlights * baggage48Freq);
+                }
+                
+                // Update display
+                document.getElementById('partnerDisplay').textContent = partnerName;
+                document.getElementById('marketDisplay').textContent = `Primary Market: ${market}`;
+                document.getElementById('volumeDisplay').textContent = volumeDiscounts[volumeBand].band;
+                document.getElementById('techFeeRate').textContent = `€${stTechFee.toFixed(2)} / €${amtTechFee.toFixed(2)}`;
+                
+                document.getElementById('singleTripFlightCount').textContent = `${singleTripFlights} flights`;
+                document.getElementById('multiTripFlightCount').textContent = `${multiTripFlights} flights`;
+                
+                // Tech fee display
+                document.getElementById('techVolumeBand').textContent = volumeDiscounts[volumeBand].band + ' policies';
+                document.getElementById('stTechFee').textContent = `€${stTechFee.toFixed(2)} per policy`;
+                document.getElementById('amtTechFee').textContent = `€${amtTechFee.toFixed(2)} per policy`;
+                document.getElementById('discountApplied').textContent = techDiscount > 0 ? `${(techDiscount * 100).toFixed(0)}%` : 'None';
+                
+                const marketData = sampleMarketData[market];
+                
+                const delayThresholds = [
+                    {label: '90 Minutes', key: '1.5h'},
+                    {label: '2 Hours', key: '2h'},
+                    {label: '3 Hours', key: '3h', recommended: true},
+                    {label: '4 Hours', key: '4h'},
+                    {label: '5 Hours', key: '5h'}
+                ];
+                
+                const singleTripResults = [];
+                const multiTripResults = [];
+                
+                delayThresholds.forEach(threshold => {
+                    const depProb = marketData[threshold.key] || 0;
+                    const arrProb = marketData[threshold.key] || 0;
+                    const combinedProb = depProb + arrProb;
+                    
+                    // Single trip calculation
+                    const flightDelayCostSingle = totalDelayIndemnity * combinedProb * registrationRate * singleTripFlights;
+                    const totalExpectedLossSingle = flightDelayCostSingle + baggageCostSingle;
+                    const underwritingCostSingle = totalExpectedLossSingle * (1 + underwritingMargin);
+                    const totalCostSingle = underwritingCostSingle + stTechFee;
+                    
+                    singleTripResults.push({
+                        label: threshold.label,
+                        underwritingCost: underwritingCostSingle,
+                        techFee: stTechFee,
+                        totalCost: totalCostSingle,
+                        expectedLoss: totalExpectedLossSingle,
+                        recommended: threshold.recommended
+                    });
+                    
+                    // Multi trip calculation
+                    const flightDelayCostMulti = totalDelayIndemnity * combinedProb * registrationRate * multiTripFlights;
+                    const totalExpectedLossMulti = flightDelayCostMulti + baggageCostMulti;
+                    const underwritingCostMulti = totalExpectedLossMulti * (1 + underwritingMargin);
+                    const totalCostMulti = underwritingCostMulti + amtTechFee;
+                    
+                    multiTripResults.push({
+                        label: threshold.label,
+                        underwritingCost: underwritingCostMulti,
+                        techFee: amtTechFee,
+                        totalCost: totalCostMulti,
+                        expectedLoss: totalExpectedLossMulti,
+                        recommended: threshold.recommended
+                    });
+                });
+                
+                displayResults(singleTripResults, multiTripResults);
+                
+            } catch (error) {
+                showError('Calculation error: ' + error.message);
+            }
+        }
+
+        function displayResults(singleTripResults, multiTripResults) {
+            document.getElementById('loading').classList.remove('active');
+            document.getElementById('resultsContent').style.display = 'block';
+            
+            const singleTripTable = document.getElementById('singleTripTable');
+            singleTripTable.innerHTML = '';
+            
+            singleTripResults.forEach(result => {
+                const row = document.createElement('tr');
+                if (result.recommended) row.className = 'recommended';
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="delay-time">${result.label}</div>
+                        <div class="price-breakdown">
+                            Underwriting: $${result.underwritingCost.toFixed(2)} + Tech: €${result.techFee.toFixed(3)}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="price-value price-total">$${result.totalCost.toFixed(2)}</div>
+                        ${result.recommended ? '<div style="color: var(--accent); font-size: 0.75rem; margin-top: 0.25rem;">Recommended</div>' : ''}
+                    </td>
+                `;
+                
+                singleTripTable.appendChild(row);
+            });
+            
+            const multiTripTable = document.getElementById('multiTripTable');
+            multiTripTable.innerHTML = '';
+            
+            multiTripResults.forEach(result => {
+                const row = document.createElement('tr');
+                if (result.recommended) row.className = 'recommended';
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="delay-time">${result.label}</div>
+                        <div class="price-breakdown">
+                            Underwriting: $${result.underwritingCost.toFixed(2)} + Tech: €${result.techFee.toFixed(3)}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="price-value price-total">$${result.totalCost.toFixed(2)}</div>
+                        ${result.recommended ? '<div style="color: var(--accent); font-size: 0.75rem; margin-top: 0.25rem;">Recommended</div>' : ''}
+                    </td>
+                `;
+                
+                multiTripTable.appendChild(row);
+            });
+        }
+
+        function showError(message) {
+            document.getElementById('loading').classList.remove('active');
+            document.getElementById('resultsContent').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('errorMessage').innerHTML = `<div class="error">${message}</div>`;
+        }
+
+        function copyToClipboard() {
+            const partnerName = document.getElementById('partnerDisplay').textContent;
+            const market = document.getElementById('marketDisplay').textContent;
+            const volumeBand = document.getElementById('volumeDisplay').textContent;
+            const techFees = document.getElementById('techFeeRate').textContent;
+            
+            const singleTripRows = document.querySelectorAll('#singleTripTable tr');
+            const multiTripRows = document.querySelectorAll('#multiTripTable tr');
+            
+            let quoteText = `BLINK PARAMETRIC - COMPLETE PARTNER QUOTE\n`;
+            quoteText += `==========================================\n\n`;
+            quoteText += `Partner: ${partnerName}\n`;
+            quoteText += `${market}\n`;
+            quoteText += `Volume Band: ${volumeBand}\n`;
+            quoteText += `Tech Fee Rates: ${techFees}\n`;
+            quoteText += `Date: ${new Date().toLocaleDateString()}\n\n`;
+            
+            quoteText += `SETUP COSTS\n`;
+            quoteText += `-----------\n`;
+            quoteText += `One-time Setup Fee: €10,000\n`;
+            quoteText += `Monthly Minimum: €5,000\n\n`;
+            
+            quoteText += `SINGLE TRIP PRICING\n`;
+            quoteText += `-------------------\n`;
+            singleTripRows.forEach(row => {
+                const delay = row.querySelector('.delay-time').textContent;
+                const price = row.querySelector('.price-total').textContent;
+                quoteText += `${delay}: ${price}\n`;
+            });
+            
+            quoteText += `\nMULTI-TRIP PRICING (ANNUAL)\n`;
+            quoteText += `---------------------------\n`;
+            multiTripRows.forEach(row => {
+                const delay = row.querySelector('.delay-time').textContent;
+                const price = row.querySelector('.price-total').textContent;
+                quoteText += `${delay}: ${price}\n`;
+            });
+            
+            quoteText += `\n* Prices include underwriting costs and Blink technology fees\n`;
+            quoteText += `* Technology fees based on ${volumeBand} volume band\n`;
+            
+            navigator.clipboard.writeText(quoteText).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate market dropdown
+            const marketSelect = document.getElementById('primaryMarket');
+            const markets = Object.keys(sampleMarketData).sort();
+            
+            markets.forEach(market => {
+                marketSelect.innerHTML += `<option value="${market}">${market}</option>`;
+            });
+            
+            // Set up all event listeners
+            document.querySelectorAll('.toggle-btn[data-type]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const group = this.parentElement.querySelectorAll('.toggle-btn');
+                    group.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    if (this.dataset.type === 'lounge') {
+                        document.getElementById('benefitLabel').textContent = 'Lounge Pass Cost ($)';
+                        document.getElementById('benefitValue').value = '26.76';
+                        document.getElementById('redemptionGroup').style.display = 'block';
+                    } else {
+                        document.getElementById('benefitLabel').textContent = 'Cash Payout Value ($)';
+                        document.getElementById('benefitValue').value = '30';
+                        document.getElementById('redemptionGroup').style.display = 'none';
+                        document.getElementById('redemptionRate').value = '100';
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.luggage').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.luggage').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    if (this.dataset.luggage === 'yes') {
+                        document.getElementById('baggageDetails').style.display = 'block';
+                    } else {
+                        document.getElementById('baggageDetails').style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
